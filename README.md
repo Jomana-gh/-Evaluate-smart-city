@@ -1,23 +1,69 @@
-# -Evaluate-smart-city
-# Riyadh Neighborhood Data Scraper 
+# Riyadh Neighborhoods Dashboard
 
-##  Project Goal
+A data-driven interactive dashboard to visualize and rank neighborhoods in Riyadh based on selected indicators such as:
 
-To automate the collection of place data  from Riyadh neighborhoods, and analyze them against international standards for urban development and smart cities.
+- Human-Centered Index (HCI)
+- Number of Public Stations
+- Population Density
+- Cooling Degree Days (CDD)
+- Heating Degree Days (HDD)
 
-##  Project Structure
+---
 
-This repository includes two main tools:
+##  Goal
 
-### 1. `google_scraper_1.py` — Search by Place & Neighborhood
-- GUI tool that allows the user to input a **place type** (e.g., hospital, school) and **select or write a Riyadh neighborhood**.
-- Launches a Chrome browser, searches Google Maps, scrolls through results, and extracts:
-  - Name
-  - Location
-  - Neighborhood
-- Results are saved to `results.csv`.
+This tool helps urban planners, researchers, and decision-makers analyze Riyadh neighborhoods and understand how they align with smart city standards using various environmental and infrastructural indicators.
 
-### 2. `google_scraper_2.py` — Search by Google Maps Link
-- GUI tool that accepts a direct **Google Maps search link**.
-- Automatically scrolls and extracts data as above.
-- Tries to **infer the neighborhood** from the location string.
+---
+
+##  Dataset
+
+Combined Excel dataset: `final_merged_riyadh_data.xlsx`
+
+**Columns:**
+
+- `Neighborhood`: Name of the district
+- `Latitude`, `Longitude`: Coordinates
+- `HCI`: Human-Centered Index
+- `PublicStation`: Number of public service stations
+- `PopulationDensity`
+- `CDD`: Cooling Degree Days
+- `HDD`: Heating Degree Days
+
+---
+
+##  Files Overview
+
+The project consists of two main components:
+
+### 1.  Streamlit Dashboard – `StandardIntegration.py`
+
+- Built with Python and **Streamlit**.
+- Uses `folium` via `streamlit-folium` to render interactive maps.
+- Supports filtering and ranking based on multiple indicators.
+- Works as a standalone interface for quick exploration.
+
+---
+
+### 2.  React + Flask Interactive Web App
+
+#### 2.1  Backend – Flask API (`app.py`)
+
+- Serves as the **backend data provider** for the React app.
+- Loads and processes the main dataset.
+- Computes rankings and handles metric-based filtering.
+- Supplies GeoJSON-like neighborhood data (lat/lon) for mapping.
+
+#### 2.2  Frontend – React (`frontend/`)
+
+- Built with **ReactJS** and **Mapbox GL JS**.
+- Main files:
+  - `MapComponent.jsx`:  
+    - Renders interactive map with neighborhood markers.  
+    - Displays popups, handles filtering and user interactions.
+  - `app.js`:  
+    - Entry point of the app.  
+    - Handles app state and renders the map component.
+
+---
+
