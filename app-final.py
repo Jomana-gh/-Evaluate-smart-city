@@ -2,9 +2,9 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+CORS(app) # Enable CORS to allow cross-origin requests
 
-# البيانات
+# Data
 data = [
  {
   "Neighborhood": "الجرادية",
@@ -1047,17 +1047,18 @@ data = [
 
 @app.route('/api/neighborhoods-data')
 def get_neighborhoods():
-    # خذ اسم المؤشر من الرابط
-    indicator = request.args.get('indicator', 'HCI')  # الافتراضي HCI
+    # Get the indicator name from query parameters, default to 'HCI'
+    indicator = request.args.get('indicator', 'HCI')  
 
     valid_indicators = ['HCI', 'CDD', 'HDD', 'publict station']
 
     if indicator not in valid_indicators:
         return jsonify({"error": f"Invalid indicator: {indicator}"}), 400
 
-    # رتب حسب المؤشر من الأعلى للأقل
+    # Sort data by the indicator in descending order
     sorted_data = sorted(data, key=lambda x: x.get(indicator, 0), reverse=True)
 
+    # Return the sorted data as JSON response
     return jsonify(sorted_data)
 
 if __name__ == '__main__':
